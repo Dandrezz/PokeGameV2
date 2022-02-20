@@ -1,10 +1,7 @@
 <template>
-  <PokemonPage />
+  <router-view/>
 </template>
 
-<script setup lang="ts">
-import PokemonPage from './pages/PokemonPage.vue';
-</script>
 
 <style>
 #app {

@@ -21,3 +21,29 @@ html, body {
     background-color: #218838;
     border-color: #1e7e34;
 }
+
+.btn-danger {
+    margin: 0;
+	color: #fff;
+	background-color: #dc3545;
+	border-color: #dc3545;
+    padding: .375rem .75rem;
+    border-radius: .25rem;
+    transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+    line-height: 1.5;
+    font-size: 1rem;
+    border: 1px solid transparent;
+}
+
+.btn-danger:hover {
+    color: #fff;
+    background-color: #c82333;
+    border-color: #c8233F;
+}
+
+.mt-3 {
+    margin-top:  0.75rem;
+}
+.mt-5 {
+    margin-top: 1.25rem;
+}

@@ -22,15 +22,13 @@ export const usePokemon = () => {
     const mixPokemonsArray = async () => {
 
         pokemonArr.value = await getPokemonOptions()
-
         const rndInt = Math.floor(Math.random() * 4)
-
         pokemon.value = pokemonArr.value[rndInt]
 
     }
 
     const checkAnswer = (selectedId: any) => {
-
+        console.log(selectedId)
         showPokemon.value = true
         showAnswer.value = true
 

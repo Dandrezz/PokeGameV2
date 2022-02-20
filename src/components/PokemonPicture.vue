@@ -1,10 +1,3 @@
-<template>
-  <div class="pokemon-container">
-    <img v-if="showPokemon" :src="imgSrc" class="fade-in" alt="pokemon" />
-    <img v-else :src="imgSrc" class="hidden-pokemon" alt="pokemon" />
-  </div>
-</template>
-
 <script setup lang="ts">
 import { defineProps, toRefs, computed } from 'vue';
 
@@ -21,16 +14,23 @@ const props = defineProps({
 })
 
 const { pokemonId, showPokemon } = toRefs(props);
-
 const imgSrc = computed(() => (`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/${pokemonId.value}.svg`))
 
 </script>
+
+<template>
+  <div class="pokemon-container">
+    <img v-if="showPokemon" :src="imgSrc" class="fade-in" alt="pokemon" />
+    <img v-else :src="imgSrc" class="hidden-pokemon" alt="pokemon" />
+  </div>
+</template>
+
 
 <style >
 .pokemon-container {
   height: 200px;
 }
-img {
+img { 
   height: 200px;
   user-select: none;
   -moz-user-select: none;

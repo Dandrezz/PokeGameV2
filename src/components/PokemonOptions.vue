@@ -1,3 +1,17 @@
+<script setup lang="ts">
+
+import { defineProps, toRefs } from 'vue';
+import {Pokemon} from '../interfaces/Pokemon'
+
+interface Props {
+    pokemons: Pokemon[];
+}
+
+const props = defineProps<Props>()
+const { pokemons } = toRefs(props);
+
+</script>
+
 <template>
     <div class="options-container">
         <ul>
@@ -10,22 +24,8 @@
     </div>
 </template>
 
-<script setup lang="ts">
 
-import { defineProps, toRefs } from 'vue';
-import {Pokemon} from '../interfaces/Pokemon'
-
-interface Props {
-    pokemons: Pokemon[];
-}
-
-const props = defineProps<Props>()
-
-const { pokemons } = toRefs(props);
-
-</script>
-
-<style >
+<style>
 ul {
     list-style-type: none;
     padding: 0;
