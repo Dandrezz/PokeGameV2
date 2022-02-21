@@ -1,10 +1,11 @@
 import { AxiosResponse } from "axios"
 import pokemonApi from "../api/pokemonApi"
 import { PokemonResponse } from "../interfaces/PokemonResponse"
+import { useUserScore } from "../stores/score";
 
 let pokemonsStorage:AxiosResponse<PokemonResponse, any>;
 
-const getPokemons = ():number[] => {
+export const getPokemons = ():number[] => {
 
     const pokemonsArr = Array.from( Array(648) )
     return pokemonsArr.map( ( _ , index ) => index + 1 )
@@ -19,8 +20,9 @@ export const loadPokemons = async() => {
 
 export const getPokemonOptions = async() => {
 
-    const mixedPokemons:number[] = getPokemons()
-                            .sort( () => Math.random() - 0.5 )
+    const userScore = useUserScore();
+
+    const mixedPokemons:number[] = [...userScore.pokemonsArr.sort( () => Math.random() - 0.5 )]
 
     const pokemons = getPokemonNames( mixedPokemons.splice(0,4) )
 

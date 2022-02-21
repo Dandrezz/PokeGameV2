@@ -1,8 +1,9 @@
 <script setup lang="ts">
-import { watch, ref } from 'vue';
 import { PokemonPicture, PokemonOptions } from "../components";
-import { usePokemon, useModal } from "../composables";
-import Modal from '../components/Modal.vue';
+import { usePokemon } from "../composables";
+
+import Swal from 'sweetalert2'
+import { useUserScore } from '../stores/score'
 
 const {
   pokemon,
@@ -10,33 +11,41 @@ const {
   pokemonArr,
   showAnswer,
   message,
-  countRightAnswers,
   messageRightAnswers,
 
   checkAnswer,
   newGame
 } = usePokemon()
 
-const {
-  isOpen,
-  closeModal,
-  openModal
-} = useModal()
+const userScore = useUserScore();
 
-const score = ref<string>('')
-
-watch(
-  countRightAnswers,
-  (countRightAnswers, prevcountRightAnswers) => {
-    if (prevcountRightAnswers !== 0 && countRightAnswers == 0) openModal()
-  }
-)
+const changeName = async () => {
+  Swal.fire({
+    title: '¿Qué apodo deseas?',
+    input: 'text',
+    inputAttributes: {
+      autocapitalize: 'off'
+    },
+    showCancelButton: true,
+    confirmButtonText: 'Cambiar',
+  }).then((result) => {
+    if (result.isConfirmed) {
+      if(result.value!==''){
+        userScore.userName = result.value
+      }
+    }
+  })
+}
 
 </script>
 
 <template>
   <h1 v-if="!pokemon">Espere por favor...</h1>
   <div v-else>
+    <div>
+      <span class="username">{{userScore.userName}}&#160;</span>
+      <button class="btn-info" @click="changeName">Cambiar Apodo</button>
+    </div>
     <h1>¿Quién es este pokémon?</h1>
     <PokemonPicture :pokemon-id="pokemon.id" :show-pokemon="showPokemon" />
     <PokemonOptions :pokemons="pokemonArr" @selection="checkAnswer" />
@@ -45,29 +54,9 @@ watch(
       <button class="btn-success" @click="newGame">Siguiente</button>
     </template>
     <template v-else>
-      <h2 class="correcto" v-if="countRightAnswers !== 0">{{ messageRightAnswers }}</h2>
+      <h2 class="correcto" v-if="userScore.score !== 0">{{ messageRightAnswers }}</h2>
     </template>
   </div>
-  <Modal v-if="isOpen" @on:close="closeModal">
-    <template v-slot:header>
-      <h2>Fin de partida</h2>
-    </template>
-
-    <template v-slot:body>
-      <div>¿Desea guardar su score?</div>
-      <div>Inserte usuario</div>
-      <input v-model="score" type="text" class="mt-5" />
-      <br />
-    </template>
-
-    <template v-slot:footer>
-      <div class="mt-5">
-        <button class="btn-success">Guardar</button>
-        &#160;
-        <button class="btn-danger" @click="closeModal">Cancelar</button>
-      </div>
-    </template>
-  </Modal>
 </template>
 
 <style scoped>

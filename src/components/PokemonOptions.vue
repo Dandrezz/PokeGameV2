@@ -1,6 +1,6 @@
 <script setup lang="ts">
 
-import { defineProps, toRefs } from 'vue';
+import { toRefs } from 'vue';
 import {Pokemon} from '../interfaces/Pokemon'
 
 interface Props {
