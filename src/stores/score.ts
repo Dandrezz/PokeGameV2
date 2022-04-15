@@ -8,7 +8,9 @@ export const useUserScore = defineStore('userScore', {
         userName: 'PandaAnonimo'+Math.floor(Math.random() * 1000),
         userId: '',
         maxScore: 0,
-        pokemonsArr: getPokemons()
+        pokemonsArr: getPokemons(),
+        respondido: false,
+        badAnswer: false
     }),
     
     actions:{

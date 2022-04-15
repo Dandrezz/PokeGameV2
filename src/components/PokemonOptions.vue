@@ -1,7 +1,8 @@
 <script setup lang="ts">
 
 import { toRefs } from 'vue';
-import {Pokemon} from '../interfaces/Pokemon'
+import { Pokemon } from '../interfaces/Pokemon'
+import { useUserScore } from '../stores/score';
 
 interface Props {
     pokemons: Pokemon[];
@@ -10,12 +11,15 @@ interface Props {
 const props = defineProps<Props>()
 const { pokemons } = toRefs(props);
 
+const userScore = useUserScore();
+
 </script>
 
 <template>
     <div class="options-container">
         <ul>
             <li
+                :class="[userScore.respondido ? 'disable-li' : '' ]"
                 v-for="pokemon in pokemons"
                 :key="pokemon.id"
                 @click="$emit('selection', pokemon.id)"
@@ -49,5 +53,9 @@ li:hover {
 .options-container {
     display: flex;
     justify-content: center;
+}
+
+.disable-li{
+    background-color: rgba(0, 0, 0, 0.05);
 }
 </style>

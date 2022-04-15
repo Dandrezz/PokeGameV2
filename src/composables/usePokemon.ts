@@ -14,7 +14,7 @@ export const usePokemon = () => {
     const showAnswer = ref<boolean>(false);
     const message = ref<string>('');
     const messageRightAnswers = ref<string>('');
-    const router = useRouter()
+    
 
     const userScore = useUserScore();
 
@@ -31,21 +31,10 @@ export const usePokemon = () => {
         pokemon.value = pokemonArr.value[rndInt]
     }
 
-    const Toast = Swal.mixin({
-        toast: true,
-        position: 'top-end',
-        showConfirmButton: false,
-        timer: 1700,
-        timerProgressBar: true,
-        didOpen: (toast) => {
-            toast.addEventListener('mouseleave', Swal.resumeTimer)
-            toast.addEventListener('click', () => router.push({ name: 'Score' }))
-        },
-
-    })
-
     const checkAnswer = async (selectedId: any) => {
 
+        if(userScore.respondido) return
+        userScore.respondido = true
         showPokemon.value = true
         showAnswer.value = true
 
@@ -55,6 +44,7 @@ export const usePokemon = () => {
             userScore.score += 1;
             messageRightAnswers.value = `${userScore.score} ${userScore.score === 1 ? 'correcta' : 'correctas seguidas'}`
         } else {
+            userScore.badAnswer = true
             if (userScore.score !== 0) {
                 if(userScore.userId === ''){
                     try {
@@ -79,29 +69,18 @@ export const usePokemon = () => {
                         }
                     }
                 }
-                Toast.fire({
-                    icon: 'info',
-                    title: 'Ver score ¡Click aqui!',
-                })
             }
             message.value = `Oops, era ${pokemon.value?.name}`
             userScore.score = 0;
             messageRightAnswers.value = ''
         }
-
     }
-
-    const saveUser = async () => {
-        await usersScoreApi.post('user', {
-            name: userScore.userName,
-            score: userScore.score
-        })
-    }
-
-
 
     const newGame = async () => {
 
+        userScore.respondido = false
+        userScore.badAnswer = false
+        message.value = ""
         showPokemon.value = false
         showAnswer.value = false
         pokemonArr.value = []
