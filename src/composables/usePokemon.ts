@@ -2,8 +2,6 @@ import { onMounted, ref } from 'vue';
 import { loadPokemons, getPokemonOptions } from '../helpers/getOptionPokemons';
 import { Pokemon } from '../interfaces/Pokemon';
 import { useUserScore } from '../stores/score';
-import Swal from 'sweetalert2'
-import { useRouter } from 'vue-router'
 import { usersScoreApi } from '../api';
 
 export const usePokemon = () => {

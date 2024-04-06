@@ -42,6 +42,7 @@ const changeName = async () => {
 
 const goTableScore = () => {
   router.push({ name: 'Score' })
+  userScore.respondido = false
 }
 
 </script>

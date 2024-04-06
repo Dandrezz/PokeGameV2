@@ -7,8 +7,8 @@ import { UserResponse } from '../interfaces/UserResponse'
 const users = ref()
 
 onMounted(async () => {
-    const { data } = await usersScoreApi.get<AxiosResponse<UserResponse>>('/users/top')
-    users.value = data.data
+    const { data } = await usersScoreApi.get<AxiosResponse<UserResponse>>('/user/top')
+    users.value = data
     console.log(users.value)
 })
 
